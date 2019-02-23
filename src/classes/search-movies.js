@@ -1,9 +1,25 @@
 export default class SearchMovies{
     constructor(wrapperHTMLSelector){
         this.wrapperHTMLSelector = wrapperHTMLSelector;
+        this.fetchGenres().then((genres)=>{
+            this.genres = genres.genres;
+        })
     }
 
-     getMovies(title, page){
+    async fetchGenres(){
+        const response = await fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=1c5abaaeaa13c66b570ad3042a0d51f4&language=en-US")
+        return await response.json()
+    }
+
+    getGenreNamebyId(id){
+        const selectedGenre = this.genres.map(genre => genre).filter(genre => genre.id == id)[0]
+        if(selectedGenre){
+            return selectedGenre.name;
+        }
+        return "";
+    }
+
+    fetchMovies(title, page){
         if(title.length > 2){
             this.title = title;
             this.page = page;
@@ -26,14 +42,15 @@ export default class SearchMovies{
 
     renderMovies(movies){
         console.log(movies);
-        const markup = `
+        const template = `
             <div class="movies">
                 ${movies.results.map(movie => `
                 <div class="movie">
                     <img src=https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path} />
                     <details> 
                         <summary> ${movie.title ? movie.title : movie.name}</summary>
-                        <p>${movie.first_air_date ? movie.first_air_date : " "}</p>
+                        <time datetime="${movie.first_air_date ? movie.first_air_date : " "}">${movie.first_air_date ? movie.first_air_date : " "}</time>
+                        <p>Genres: ${movie.genre_ids.map( genre_id => this.getGenreNamebyId(genre_id) )}</p>
                     </details>
                 </div>`
                 ).join('')}
@@ -41,7 +58,7 @@ export default class SearchMovies{
             ${this.renderPagination(movies.total_pages)}`;
 
         const resultContainer = document.querySelector(this.wrapperHTMLSelector);
-        resultContainer.innerHTML = markup;
+        resultContainer.innerHTML = template;
     }
 
     renderPagination(allPageNumber){
@@ -53,14 +70,9 @@ export default class SearchMovies{
         <div class="pagination">
             ${paginations
                 .filter( pagination => (this.page -5) < pagination && pagination < (this.page + 5) )
-                .map(pagination => `<a class="${pagination === this.page ? "current" : ""}">${pagination}</a>`).join('')
+                .map(pagination => `<a onclick="searcher.fetchMovies(${this.title}, ${pagination})" class="${pagination === this.page ? "current" : ""}">${pagination}</a>`).join('')
             }
         </div>        
         `
-        /*document.querySelector(".pagination a").addEventListener("click", ()=>{
-            console.log("click");
-        })
-        return template;*/
-
     }
 }
