@@ -5,7 +5,20 @@
         <title>Movie Database</title>
     </head>
     <body>
-        <div id="app"></div>
+        <header>
+            <h1>Movie Database</h1>
+        </header>
+        <div id="mainContainer">
+            <form id="searchForm">
+                <label for="movie-search">Search:</label>
+                <input type="search" id="movie-search" name="movie"
+                    aria-label="Search movie" placeholder="Title">
+            </form>
+
+            <div class="resultContainer">
+            </div>
+
+        </div>
         <script src="/bundle.js"></script>
     </body>
 </html>
