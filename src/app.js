@@ -1,1 +1,3 @@
-console.log("App is running")
+import './styles/styles.scss';
+
+console.log('App is running')
