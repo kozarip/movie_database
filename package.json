@@ -1,0 +1,30 @@
+{
+  "name": "movie_database",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/kozarip/movie_database.git"
+  },
+  "author": "Peter Kozari",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kozarip/movie_database/issues"
+  },
+  "homepage": "https://github.com/kozarip/movie_database#readme",
+  "scripts": {
+    "build": "webpack",
+    "serve" : "webpack-dev-server"
+  },
+  "dependencies": {
+    "webpack": "^4.29.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.3",
+    "@babel/preset-env": "^7.3.1",
+    "babel-loader": "^8.0.5",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.0"
+  }
+}
