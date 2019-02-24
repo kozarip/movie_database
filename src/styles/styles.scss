@@ -15,7 +15,7 @@ header{
     }
 }
 .hidden{
-    display: none;
+    display: none !important;
 }
 #mainContainer{
     max-width: $desktop-max;
@@ -52,6 +52,11 @@ header{
         .movie{
             margin-bottom: 40px;
             cursor: pointer;
+
+            img{
+                width: 300px;
+                height: 450px;
+            }
         }
     }
     .pagination{
@@ -81,8 +86,10 @@ header{
             max-width: 80%;
             background: $background-color;
             @media only screen and (max-width: $mobile-max) {
-                max-width: 100%;
                 left: 0;
+                top: 0;
+                max-width: 100%;
+                text-align: center;
             }
             .closeDialog{
                 position: absolute;
@@ -94,6 +101,13 @@ header{
             img{
                 float: left;
                 margin-right: 40px;
+                width: 300px;
+                height: 450px;
+                @media only screen and (max-width: $mobile-max) {
+                    float: none;
+                    width: 200px;
+                    height: auto;
+                }
             }
             table{
                 td{
@@ -106,5 +120,24 @@ header{
             }
         }
     }
+}
+#loader {
+    position: fixed;
+    top: 40%;
+    left: calc(50% - 25px);
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+}
 
+@keyframes spin {
+to { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+to { -webkit-transform: rotate(360deg); }
 }
