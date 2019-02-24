@@ -56,18 +56,21 @@ export default class SearchMovies{
         }
     }
 
+    showMovieDetails(movieID){
+        console.log(movieID)
+    }
+
     renderMovies(movies){
         console.log(movies);
         const template = `
             <div class="movies">
                 ${movies.results.map(movie => `
-                <div class="movie">
+                <div class="movie" onclick="window.showMovieDetails(${movie.id})">
                     <img src=https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path} />
-                    <details> 
-                        <summary> ${movie.title ? movie.title : movie.name}</summary>
-                        <time datetime="${movie.first_air_date ? movie.first_air_date : " "}">${movie.first_air_date ? movie.first_air_date : " "}</time>
-                        <p>Genres: ${movie.genre_ids.map( genre_id => this.getGenreNamebyId(genre_id) )}</p>
-                    </details>
+                    ${movie.id}
+                    <h3> ${movie.title ? movie.title : movie.name}</h3>
+                    <time datetime="${movie.first_air_date ? movie.first_air_date : " "}">${movie.first_air_date ? movie.first_air_date : " "}</time>
+                    <p>Genres: ${movie.genre_ids.map( genre_id => this.getGenreNamebyId(genre_id) )}</p>
                 </div>`
                 ).join('')}
             </div>
