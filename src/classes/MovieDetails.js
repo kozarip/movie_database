@@ -1,4 +1,4 @@
-export default class SearchMovies{
+export default class MovieDetails{
     constructor(wrapperHTMLSelector){
         this.wrapperHTMLSelector = wrapperHTMLSelector;
     }
@@ -42,7 +42,7 @@ export default class SearchMovies{
                     </tr>
                     <tr>
                         <td>IMDB</td>
-                        <td href="http://imdb.com//title/${details.imdb_id}">Link</td>
+                        <td><a href="http://imdb.com//title/${details.imdb_id}">Link</a></td>
                     </tr>
                     <tr>
                         <td>Description</td>

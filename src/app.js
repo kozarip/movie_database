@@ -1,17 +1,26 @@
 console.log('App is running')
 
 import './styles/styles.scss';
-import SearchMovies from './classes/search-movies.js'
-import MovieDetails from './classes/movie-details.js'
+import MovieList from './classes/MovieList.js'
+import MovieDetails from './classes/MovieDetails.js'
 
-const movies = new SearchMovies(".resultContainer");
+const movieList = new MovieList(".resultContainer");
 const movieDetails = new MovieDetails("#dialogContainer");
 
 
+window.showMovieDetails = function(movieID){
+    movieDetails.fetchDetails(movieID);
+}
+
 document.getElementById("searchForm").addEventListener("submit", (event)=>{
     event.preventDefault()
-    movies.fetchMovies(event.target.elements.movie.value,1)
+    movieList.fetchMovies(event.target.elements.movie.value,1)
 })
 
-movies.fetchMovies("Star",1)
-movieDetails.fetchDetails("348350");
+document.addEventListener('click',(e) => {
+    if(e.target && e.target.parentElement.className.includes('movie') ) {
+        movieDetails.fetchDetails(e.target.parentElement.getAttribute("data-id"));
+    }
+ });
+
+ movieList.fetchMovies("Star",1)
