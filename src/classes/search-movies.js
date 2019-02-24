@@ -19,10 +19,26 @@ export default class SearchMovies{
         return "";
     }
 
+    doPagination(){
+        document.addEventListener('click',(e) => {
+            if(e.target && e.target.className.includes('pageNumber') ) {
+                this.fetchMovies(this.title,e.target.innerHTML)
+            }
+         });
+    }
+
+    createPaginationArray(allPageNumber){
+        const paginations = [];
+        for(let i = 0; i < allPageNumber; i++){
+            paginations.push(i+1);
+        }
+        return paginations;
+    }
+
     fetchMovies(title, page){
         if(title.length > 2){
             this.title = title;
-            this.page = page;
+            this.page = parseInt(page);
             this.link = "https://api.themoviedb.org/3/search/multi?api_key=1c5abaaeaa13c66b570ad3042a0d51f4&language=en-US&query="+encodeURI(this.title)+"&page="+encodeURI(this.page);
     
             fetch(this.link)
@@ -57,22 +73,23 @@ export default class SearchMovies{
             </div>
             ${this.renderPagination(movies.total_pages)}`;
 
+        this.doPagination();
+
         const resultContainer = document.querySelector(this.wrapperHTMLSelector);
         resultContainer.innerHTML = template;
     }
 
     renderPagination(allPageNumber){
-        const paginations = [];
-        for(let i = 0; i < allPageNumber; i++){
-            paginations.push(i+1);
-        }
+        const paginations = this.createPaginationArray(allPageNumber)
         return `
         <div class="pagination">
             ${paginations
-                .filter( pagination => (this.page -5) < pagination && pagination < (this.page + 5) )
-                .map(pagination => `<a onclick="searcher.fetchMovies(${this.title}, ${pagination})" class="${pagination === this.page ? "current" : ""}">${pagination}</a>`).join('')
+                .filter( (pagination) => { return (this.page - 5) < pagination && pagination < (this.page + 5) } )
+                .map(number => `<a class="pageNumber ${number == this.page ? "current" : ""}">${number}</a>`).join('')
             }
         </div>        
         `
     }
+
+
 }
