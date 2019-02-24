@@ -15,7 +15,7 @@ export default class MoviesList{
         console.log(movies);
         console.log(genres);
         this.genres = genres.genres;
-        let template = `<p>Sorry, we couldn't find any content</p>`
+        let template = ``
 
         if(movies.results.length > 0){
         template = `
@@ -25,12 +25,14 @@ export default class MoviesList{
                     <img src=https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path} />
                     <h3> ${movie.title ? movie.title : movie.name}</h3>
                     <time datetime="${movie.first_air_date ? movie.first_air_date : " "}">${movie.first_air_date ? movie.first_air_date : " "}</time>
-                    <p>Genres: ${movie.genre_ids.map( (genre_id) => { return this.getGenreNamebyId(genre_id)} ).join(' ')}</p>
+                    <p>Genres: ${movie.genre_ids.map( genre_id => this.getGenreNamebyId(genre_id) ).join(' ')}</p>
                 </div>`
                 ).join('')}
             </div>
             ${pagination.renderPagination(movies.total_pages, )}
             `;
+        }else{
+            template = `<p>Sorry, we couldn't find any content</p>`
         }
 
         const resultContainer = document.querySelector(this.wrapperHTMLSelector);

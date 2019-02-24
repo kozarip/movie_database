@@ -13,9 +13,9 @@ export default class Pagination{
 
     selectPaginationNumbers(allPageNumber){
         const paginations = [];
-        const minPageNumber = Math.max(1, (this.currentPage -5));
-        const maxPageNumber = Math.min(allPageNumber, (this.currentPage + 5))
-        for(let i = minPageNumber; i <= maxPageNumber; i++){
+        const minDisplayPageNumber = Math.max(1, (this.currentPage -5));
+        const maxDisplayPageNumber = Math.min(allPageNumber, (this.currentPage + 5))
+        for(let i = minDisplayPageNumber; i <= maxDisplayPageNumber; i++){
             paginations.push(i);
         }
         return paginations;
