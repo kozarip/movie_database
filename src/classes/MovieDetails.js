@@ -3,24 +3,10 @@ export default class MovieDetails{
         this.wrapperHTMLSelector = wrapperHTMLSelector;
     }
 
-    fetchDetails(movieId){
-        fetch("https://api.themoviedb.org/3/movie/"+movieId+"?api_key=1c5abaaeaa13c66b570ad3042a0d51f4&language=en-US")
-        .then(response => response.json())
-        .then(json => {
-            this.renderDetailsDialog(json)
-        })
-        .catch(error => {
-            console.log(error);
-            alert("Sorry, there are no results for your search");
-        });
-    }
-
-    renderDetailsDialog(details){
+    renderDetails(details){
         console.log(details);
         const template = `
-        <div class="dialogWrapper">
-            <div class="dialog">
-                <a onclick="document.getElementById('dialogContainer').innerHTML=''" class="closeDialog">X</a>
+            <div>
                 <img src=https://image.tmdb.org/t/p/w300_and_h450_bestv2${details.poster_path} />
                 <h2>${details.title ? details.title : details.name}</h2>
                 <table>
@@ -50,7 +36,6 @@ export default class MovieDetails{
                     </tr>
                 </table>
             </div>
-        </div>
         `;
 
         const resultContainer = document.querySelector(this.wrapperHTMLSelector);

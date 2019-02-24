@@ -15,10 +15,13 @@
                     aria-label="Search movie" placeholder="Title">
             </form>
 
-            <div class="resultContainer">
-            </div>
+            <div id="resultContainer"></div>
 
-            <div id="dialogContainer">
+            <div id="dialogContainer" class="hidden">
+                <div class="dialog">
+                    <a onclick="document.querySelector('#dialogContainer').classList.add('hidden')" class="closeDialog">X</a>
+                    <div class="dialogContent"></div>
+                </div>
             </div>
         </div>
         <script src="/bundle.js"></script>
