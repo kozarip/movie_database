@@ -12,27 +12,27 @@ export default class MovieDetails{
                 <table>
                     <tr>
                         <td>Genres</td>
-                        <td>${details.genres.map(genre => genre.name)}</td>
+                        <td>${details.genres ? details.genres.map(genre => genre.name) : ""}</td>
                     </tr>
                     <tr>
                         <td>Production countries</td>
-                        <td>${details.production_countries.map(production_country => production_country.name)}</td>
+                        <td>${details.production_countries ? details.production_countries.map(production_country => production_country.name): ""}</td>
                     </tr>
                     <tr>
                         <td>Release date</td>
-                        <td datetime="${details.release_date}">${details.release_date}</td>
+                        <td datetime="${details.release_date}">${details.genres ? details.release_date : ""}</td>
                     </tr>
                     <tr>
                         <td>Runtime</td>
-                        <td>${details.runtime} min</td>
+                        <td>${details.runtime ? details.runtime : ""} min</td>
                     </tr>
                     <tr>
                         <td>IMDB</td>
-                        <td><a href="http://imdb.com//title/${details.imdb_id}">Link</a></td>
+                        <td>${ details.imdb_id ? `<a href="http://imdb.com//title/${details.imdb_id}">Link</a>` : ""}</td>
                     </tr>
                     <tr>
                         <td>Description</td>
-                        <td>${details.overview}</td>
+                        <td>${details.overview ? details.overview : ""}</td>
                     </tr>
                 </table>
             </div>
