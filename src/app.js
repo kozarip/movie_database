@@ -22,5 +22,3 @@ document.addEventListener('click',(e) => {
         movieDetails.fetchDetails(e.target.parentElement.getAttribute("data-id"));
     }
  });
-
- movieList.fetchMovies("Star",1)
