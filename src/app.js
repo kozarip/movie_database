@@ -6,6 +6,7 @@ import MovieConnector from './classes/MovieConnector.js'
 import MovieList from './classes/MovieList.js'
 import MovieDetails from './classes/MovieDetails.js'
 import Pagination from './classes/Pagination.js'
+import ErrorHandler from './classes/utils/ErrorHandler';
 
 const movieConnector = new MovieConnector()
 const movieList = new MovieList("#resultContainer");
@@ -14,48 +15,56 @@ const pagination = new Pagination();
 const errorHandler = new ErrorHandler("#errorMessageConatiner");
 
 const searchForm = document.getElementById("searchForm");
-let movieTitle = "";
+let searchedMovieTitle = "";
+
+const searchMovie = (movieTitle, page) => {
+    document.querySelector('#loader').classList.remove('hidden');
+
+    Promise.all([
+        movieConnector.fetchFromServer(movieConnector.link+"search12/multi?api_key="+movieConnector.api_key+"&language=en-US&query="+encodeURI(movieTitle)+"&page="+page),
+        movieConnector.fetchFromServer(movieConnector.link+"genre/movie/list?api_key="+movieConnector.api_key+"&language=en-US")
+    ]).then(([movies, genres]) => {
+        if(movies.status_code){
+            errorHandler.handler(movies);
+        } else if(genres.status_code){
+            errorHandler.handler(genres);
+        } else{
+            searchedMovieTitle = movieTitle;
+            movieList.renderMovies(movies,genres,pagination);
+        }
+    }).catch((error) => {
+        errorHandler.handler(error)
+    });
+
+    document.querySelector('#loader').classList.add('hidden');
+}
 
 //Search movies
 searchForm.addEventListener("submit", (event)=>{
     event.preventDefault()
-    document.querySelector('#loader').classList.remove('hidden');
     if(event.target.elements.movie.value.length < 3){
-        alert("Type at least 3 characters");
+        errorHandler.handler("Type at least 3 characters");
         return;
     }
-    Promise.all([
-        movieConnector.fetchMovies(event.target.elements.movie.value,1),
-        movieConnector.fetchGenres()
-      ]).then(([movies, genres]) => {
-        movieTitle = event.target.elements.movie.value;
-        movieList.renderMovies(movies,genres,pagination);
-        document.querySelector('#loader').classList.add('hidden');
-      }).catch((err) => {
-          alert("Sorry, we have an error")
-          console.log(err);
-          document.querySelector('#loader').classList.add('hidden');
-      });
+    searchMovie(event.target.elements.movie.value, 1)
 })
+
 document.addEventListener('click',(e) => {
     //Show movie details in dialog
     if(e.target && e.target.parentElement && e.target.parentElement.className.includes('movie') ) {
         document.querySelector('#loader').classList.remove('hidden');
-        movieConnector.fetchDetails(e.target.parentElement.getAttribute("data-id")).then((details)=>{
+
+        movieConnector.fetchFromServer( movieConnector.link+"movie/"+e.target.parentElement.getAttribute("data-id")+"?api_key="+movieConnector.api_key+"&language=en-US" ).then((details)=>{
             movieDetails.renderDetails(details);
             document.querySelector('#dialogContainer').classList.remove('hidden')
             document.querySelector('#loader').classList.add('hidden');
-        })
+        }).catch((error) => {
+            errorHandler.handler(error)
+        });
     }
+
     //Do pagination
     if(e.target && e.target.className.includes('pageNumber') ) {
-        document.querySelector('#loader').classList.remove('hidden');
-        movieConnector.fetchMovies( movieTitle ,e.target.innerHTML).then((movies) =>{
-            movieConnector.fetchGenres().then((genres)=>{
-                pagination.setCurrentPage(e.target.innerHTML)
-                movieList.renderMovies(movies,genres,pagination);
-                document.querySelector('#loader').classList.add('hidden');
-            })
-        })
+        searchMovie(searchedMovieTitle, e.target.innerHTML);
     }
  });
