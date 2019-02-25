@@ -21,7 +21,7 @@ const searchMovie = (movieTitle, page) => {
     document.querySelector('#loader').classList.remove('hidden');
 
     Promise.all([
-        movieConnector.fetchFromServer(movieConnector.link+"search12/multi?api_key="+movieConnector.api_key+"&language=en-US&query="+encodeURI(movieTitle)+"&page="+page),
+        movieConnector.fetchFromServer(movieConnector.link+"search/multi?api_key="+movieConnector.api_key+"&language=en-US&query="+encodeURI(movieTitle)+"&page="+page),
         movieConnector.fetchFromServer(movieConnector.link+"genre/movie/list?api_key="+movieConnector.api_key+"&language=en-US")
     ]).then(([movies, genres]) => {
         if(movies.status_code){
