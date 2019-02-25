@@ -6,6 +6,8 @@ export default class MovieDetails{
     renderDetails(details){
         console.log(details);
         const valueOrPlaceholder = (value, placeholder) => value ? value : placeholder;
+        const valueNamesOrPlaceholder = (valueArray, placeholder) => valueArray ? valueArray.map(value => value.name) : "";
+
         const template = `
             <div>
                 <img src=https://image.tmdb.org/t/p/w300_and_h450_bestv2${details.poster_path} />
@@ -13,11 +15,11 @@ export default class MovieDetails{
                 <table>
                     <tr>
                         <td>Genres</td>
-                        <td>${details.genres ? details.genres.map(genre => genre.name) : ""}</td>
+                        <td>${valueNamesOrPlaceholder(details.genres, "")}</td>
                     </tr>
                     <tr>
                         <td>Production countries</td>
-                        <td>${details.production_countries ? details.production_countries.map(production_country => production_country.name): ""}</td>
+                        <td>${valueNamesOrPlaceholder(details.production_countries, "")}</td>
                     </tr>
                     <tr>
                         <td>Release date</td>
