@@ -11,6 +11,7 @@ const movieConnector = new MovieConnector()
 const movieList = new MovieList("#resultContainer");
 const movieDetails = new MovieDetails(".dialogContent");
 const pagination = new Pagination();
+const errorHandler = new ErrorHandler("#errorMessageConatiner");
 
 const searchForm = document.getElementById("searchForm");
 let movieTitle = "";

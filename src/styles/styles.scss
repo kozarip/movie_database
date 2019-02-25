@@ -17,6 +17,10 @@ header{
 .hidden{
     display: none !important;
 }
+#errorMessageConatiner{
+    color: #C71436;
+    font-size: 18px;
+}
 #mainContainer{
     max-width: $desktop-max;
     margin: 0 auto;
