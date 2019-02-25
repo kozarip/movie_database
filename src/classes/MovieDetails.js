@@ -5,10 +5,11 @@ export default class MovieDetails{
 
     renderDetails(details){
         console.log(details);
+        const valueOrPlaceholder = (value, placeholder) => value ? value : placeholder;
         const template = `
             <div>
                 <img src=https://image.tmdb.org/t/p/w300_and_h450_bestv2${details.poster_path} />
-                <h2>${details.title ? details.title : details.name}</h2>
+                <h2>${valueOrPlaceholder(details.title, details.name)}</h2>
                 <table>
                     <tr>
                         <td>Genres</td>
@@ -20,11 +21,11 @@ export default class MovieDetails{
                     </tr>
                     <tr>
                         <td>Release date</td>
-                        <td datetime="${details.release_date}">${details.genres ? details.release_date : ""}</td>
+                        <td datetime="${details.release_date}">${valueOrPlaceholder(details.release_date, "")}</td>
                     </tr>
                     <tr>
                         <td>Runtime</td>
-                        <td>${details.runtime ? details.runtime : ""} min</td>
+                        <td>${valueOrPlaceholder(details.runtime, "")} min</td>
                     </tr>
                     <tr>
                         <td>IMDB</td>
@@ -32,7 +33,7 @@ export default class MovieDetails{
                     </tr>
                     <tr>
                         <td>Description</td>
-                        <td>${details.overview ? details.overview : ""}</td>
+                        <td>${valueOrPlaceholder(details.overview, "")}</td>
                     </tr>
                 </table>
             </div>
