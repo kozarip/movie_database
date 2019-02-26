@@ -3,7 +3,7 @@ export default class ErrorHandler{
         this.errorHTMLWrapper = errorHTMLWrapper;
     }
 
-    handler(error){
+    handle(error){
         this.logError(error)
         this.showMessageToUser(error);
     }
