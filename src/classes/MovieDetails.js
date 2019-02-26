@@ -6,7 +6,7 @@ export default class MovieDetails{
     renderDetails(details){
         console.log(details);
         const valueOrPlaceholder = (value, placeholder) => value ? value : placeholder;
-        const valueNamesOrPlaceholder = (valueArray, placeholder) => valueArray ? valueArray.map(value => value.name) : "";
+        const valueNamesOrPlaceholder = (valueArray, placeholder) => valueArray ? valueArray.map(value => value.name) : placeholder;
 
         const template = `
             <div>
